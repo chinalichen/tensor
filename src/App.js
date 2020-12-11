@@ -1,8 +1,8 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { load } from '@tensorflow-models/mobilenet';
 import '@tensorflow/tfjs';
 import img from './timg.jpeg';
 import './App.css';
+import { processImg } from './tensor';
 
 function App() {
   const imgRef = useRef();
@@ -15,9 +15,7 @@ function App() {
   const handleClick = useCallback(async () => {
     setResult([]);
     setLoading(true);
-    const img = imgRef.current;
-    const model = await load();
-    const result = await model.classify(img);
+    const result = await processImg(imgRef);
     setResult(result);
     setLoading(false);
   }, [setResult, setLoading]);
